@@ -19,7 +19,8 @@ from datetime import datetime
 from matplotlib.patches import Polygon
 
 # 日本語フォント設定
-plt.rcParams['font.sans-serif'] = ['MS Gothic', 'Yu Gothic', 'Meiryo']
+# Docker環境ではNoto Sans CJKを優先、Windows環境では従来のフォントを使用
+plt.rcParams['font.sans-serif'] = ['Noto Sans CJK JP', 'Noto Sans JP', 'MS Gothic', 'Yu Gothic', 'Meiryo', 'DejaVu Sans']
 plt.rcParams['axes.unicode_minus'] = False
 
 

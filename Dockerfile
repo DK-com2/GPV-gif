@@ -12,7 +12,13 @@ RUN apt-get update && apt-get install -y \
     libnetcdf-dev \
     gcc \
     g++ \
+    curl \
+    fonts-noto-cjk \
+    fonts-noto-cjk-extra \
     && rm -rf /var/lib/apt/lists/*
+
+# Clear matplotlib font cache to recognize new fonts
+RUN rm -rf ~/.cache/matplotlib
 
 # Copy requirements file
 COPY requirements.txt .
