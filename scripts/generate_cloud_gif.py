@@ -19,6 +19,20 @@ from datetime import datetime
 from matplotlib.patches import Polygon
 
 # 日本語フォント設定
+# フォントキャッシュを強制的に再読み込み
+import matplotlib.font_manager as fm
+fm._load_fontmanager(try_read_cache=False)
+
+# 利用可能な日本語フォントを検索
+available_fonts = [f.name for f in fm.fontManager.ttflist]
+japanese_fonts = [f for f in available_fonts if 'Noto' in f or 'CJK' in f or 'Gothic' in f or 'Meiryo' in f]
+
+# デバッグ: 利用可能なフォントを表示
+if japanese_fonts:
+    print(f"Available Japanese fonts: {japanese_fonts[:10]}")
+else:
+    print(f"Warning: No Japanese fonts found. Available fonts: {available_fonts[:5]}")
+
 # Docker環境ではNoto Sans CJKを優先、Windows環境では従来のフォントを使用
 plt.rcParams['font.sans-serif'] = ['Noto Sans CJK JP', 'Noto Sans JP', 'MS Gothic', 'Yu Gothic', 'Meiryo', 'DejaVu Sans']
 plt.rcParams['axes.unicode_minus'] = False

@@ -26,6 +26,9 @@ COPY requirements.txt .
 # Install Python dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
+# Rebuild matplotlib font cache after installing fonts
+RUN python -c "import matplotlib.pyplot as plt; import matplotlib.font_manager as fm; fm._load_fontmanager(try_read_cache=False); print('Font cache rebuilt')"
+
 # Copy application code
 COPY app.py .
 COPY scripts/ scripts/
