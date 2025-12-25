@@ -240,33 +240,6 @@ Failed downloads are automatically retried up to 3 times with 5-second delays.
     └──────────────┘          └─────────────────┘
 ```
 
-## Troubleshooting
-
-### No files found
-
-- Data may not be published yet (wait 1-2 hours after forecast time)
-- Check network connection
-- Verify URL is accessible: https://database.rish.kyoto-u.ac.jp/arch/jmadata/data/gpv/latest/
-
-### Download timeout
-
-- Large file size (189MB) may require longer timeout
-- Adjust `timeout` in `config.yaml`
-- Check internet connection speed
-
-### Disk space error
-
-- Each file is ~189MB
-- Ensure sufficient disk space
-- Run cleanup: `--cleanup`
-- Reduce `retention_days` in config
-
-### Permission errors
-
-- Ensure write permissions for `data/` directory
-- On Windows, run as administrator if needed
-- On Linux, check file ownership: `chmod -R u+w data/`
-
 ## 表示内容
 
 ### 対象エリア
@@ -286,24 +259,4 @@ Failed downloads are automatically retried up to 3 times with 5-second delays.
 - **下層雲（青）**: 低高度（2000m以下）の雲
 - **濃さ**: 雲量の多さを表す（薄い→濃い = 少ない→多い）
 
-## 今後の拡張可能性
 
-- 降水量・積雪量の可視化
-- 風速・風向の表示
-- 特定の山のピンポイント予報
-- スマートフォンアプリ化
-- 通知機能（悪天候アラート）
-
-## License
-
-Educational purpose only. Please respect the data source's terms of use.
-
-## Data Attribution
-
-Data provided by:
-**Research Institute for Sustainable Humanosphere, Kyoto University**
-https://database.rish.kyoto-u.ac.jp/
-
-## Contact
-
-For issues or questions about this downloader system, please create an issue in the project repository.
