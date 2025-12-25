@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  gpv-app:
+    build: .
+    container_name: gpv-cloud-animation
+    ports:
+      - "5000:5000"
+    volumes:
+      # Persist data, logs, and output
+      - ./data:/app/data
+      - ./output:/app/output
+      - ./static:/app/static
+      # Mount config as read-only
+      - ./config:/app/config:ro
+    environment:
+      - TZ=Asia/Tokyo
+      - PYTHONUNBUFFERED=1
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000/status"]
+      interval: 5m
+      timeout: 10s
+      retries: 3
+      start_period: 30s

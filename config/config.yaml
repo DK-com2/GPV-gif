@@ -1,0 +1,16 @@
+gpv_database:
+  base_url: "https://database.rish.kyoto-u.ac.jp/arch/jmadata/data/gpv/latest/"
+  file_pattern: "MSM{YYYYMMDD}{hh}S.nc"
+  forecast_hours: [0, 3, 6, 9, 12, 15, 18, 21]
+  data_delay_hours: 2
+
+storage:
+  raw_data_dir: "./data/raw"
+  log_dir: "./data/logs"
+
+download:
+  timeout: 60
+  max_retries: 3
+  retry_delay: 5
+  user_agent: "WeatherApp/1.0 (Educational Purpose)"
+  request_interval: 5

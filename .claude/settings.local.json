@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(curl:*)",
+      "Bash(pip install:*)",
+      "Bash(python scripts/download_gpv.py:*)",
+      "Bash(dir:*)",
+      "Bash(cmd /c \"dir /s /b data\\raw\\*.nc\")",
+      "Bash(cmd /c \"type data\\logs\\download.log\")",
+      "Bash(powershell -Command:*)",
+      "Bash(cat:*)",
+      "Bash(findstr:*)",
+      "Bash(./venv/Scripts/pip:*)",
+      "Bash(chmod:*)"
+    ]
+  }
+}
