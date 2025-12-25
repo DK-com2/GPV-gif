@@ -1,0 +1,67 @@
+# Caddyfile - GPV Cloud Animation用の設定例
+#
+# 使用方法:
+# 1. このファイルを Caddyfile にリネーム
+# 2. your-domain.com を実際のドメインに変更
+# 3. Caddyを再起動: sudo systemctl reload caddy
+
+# HTTPSで公開する場合（推奨）
+your-domain.com {
+    # リバースプロキシ設定
+    reverse_proxy localhost:5000
+
+    # ログ設定
+    log {
+        output file /var/log/caddy/gpv-access.log
+    }
+
+    # 静的ファイルのキャッシュ設定
+    @static {
+        path /static/*
+    }
+    header @static Cache-Control "public, max-age=3600"
+
+    # GIFファイルの圧縮を無効化（既に圧縮済み）
+    encode {
+        match {
+            not path /static/images/*.gif
+        }
+        gzip
+        zstd
+    }
+}
+
+# HTTPのみで公開する場合（開発・テスト用）
+# http://your-domain.com {
+#     reverse_proxy localhost:5000
+# }
+
+# IPアドレスで公開する場合
+# http://123.456.789.012 {
+#     reverse_proxy localhost:5000
+# }
+
+# 複数ドメインで同じサービスを公開
+# your-domain.com, www.your-domain.com {
+#     reverse_proxy localhost:5000
+# }
+
+# ベーシック認証を追加する場合
+# your-domain.com {
+#     reverse_proxy localhost:5000
+#
+#     basicauth /* {
+#         user $2a$14$Zkx19XLiW6VYouLHR5NmfOFU0z2GTNmpkT/5qqR7hx7wHW.
+#     }
+# }
+#
+# パスワードハッシュの生成:
+# caddy hash-password
+
+# サブディレクトリで公開する場合
+# your-domain.com {
+#     route /gpv/* {
+#         uri strip_prefix /gpv
+#         reverse_proxy localhost:5000
+#     }
+# }

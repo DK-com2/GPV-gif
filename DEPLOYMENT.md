@@ -200,7 +200,66 @@ scheduler.add_job(
 
 ## リバースプロキシの設定（推奨）
 
-本番環境では、NginxなどのリバースプロキシでFlaskアプリケーションを公開することを推奨します。
+本番環境では、CaddyやNginxなどのリバースプロキシでFlaskアプリケーションを公開することを推奨します。
+
+### Caddyの設定（推奨）
+
+Caddyは自動HTTPSや簡潔な設定が特徴のWebサーバーです。
+
+#### Caddyのインストール
+
+```bash
+# Ubuntu/Debian
+sudo apt install -y debian-keyring debian-archive-keyring apt-transport-https
+curl -1sLf 'https://dl.cloudsmith.io/public/caddy/stable/gpg.key' | sudo gpg --dearmor -o /usr/share/keyrings/caddy-stable-archive-keyring.gpg
+curl -1sLf 'https://dl.cloudsmith.io/public/caddy/stable/debian.deb.txt' | sudo tee /etc/apt/sources.list.d/caddy-stable.list
+sudo apt update
+sudo apt install caddy
+
+# CentOS/RHEL
+dnf install 'dnf-command(copr)'
+dnf copr enable @caddy/caddy
+dnf install caddy
+```
+
+#### Caddyfile設定
+
+`Caddyfile.example`を参考に、`/etc/caddy/Caddyfile`を編集：
+
+```caddyfile
+your-domain.com {
+    reverse_proxy localhost:5000
+
+    log {
+        output file /var/log/caddy/gpv-access.log
+    }
+
+    # 静的ファイルのキャッシュ
+    @static {
+        path /static/*
+    }
+    header @static Cache-Control "public, max-age=3600"
+}
+```
+
+#### Caddyの起動と確認
+
+```bash
+# 設定ファイルの検証
+sudo caddy validate --config /etc/caddy/Caddyfile
+
+# Caddyの起動
+sudo systemctl start caddy
+sudo systemctl enable caddy
+
+# ステータス確認
+sudo systemctl status caddy
+
+# ログ確認
+sudo journalctl -u caddy -f
+```
+
+Caddyは自動的にLet's EncryptからSSL証明書を取得して設定します。
 
 ### Nginxの設定例
 

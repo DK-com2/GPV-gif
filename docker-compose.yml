@@ -5,7 +5,7 @@ services:
     build: .
     container_name: gpv-cloud-animation
     ports:
-      - "5000:5000"
+      - "127.0.0.1:5000:5000"  # ホストの127.0.0.1:5000にバインド
     volumes:
       # Persist data, logs, and output
       - ./data:/app/data
